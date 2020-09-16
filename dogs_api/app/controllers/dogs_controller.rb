@@ -1,8 +1,12 @@
 class DogsController < ApplicationController
 
   def index
-    @dogs = Dog.all
-    render json: @dogs
+    if params[:search]
+      @dogs = Dog.where('name LIKE ?', "%#{params[:search]}%")
+    else
+      @dogs = Dog.all
+    end
+      render json: @dogs
   end
 
 end
